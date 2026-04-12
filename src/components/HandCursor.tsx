@@ -38,9 +38,15 @@ export const HandCursor: React.FC<HandCursorProps> = ({ cursor }) => {
         </div>
       )}
 
-      {cursor.isPinching && (
+      {cursor.isSnapped && cursor.isPinching && (
         <div className={`${styles.label} ${styles.top}`} style={{ top: '-30px', color: 'var(--success-color)' }}>
-          PINCH_LOCKED
+          TARGET_LOCKED
+        </div>
+      )}
+      
+      {!cursor.isSnapped && cursor.isPinching && (
+        <div className={`${styles.label} ${styles.top}`} style={{ top: '-30px', color: 'var(--accent-color)' }}>
+          RAW_LOCK
         </div>
       )}
     </div>

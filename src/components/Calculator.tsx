@@ -18,21 +18,13 @@ export const Calculator: React.FC<CalculatorProps> = ({ cursor, onSaveHistory })
   // Handle pinch gesture as a click
   useEffect(() => {
     if (cursor.isPinching) {
-      Object.entries(buttonRefs.current).forEach(([key, btn]) => {
-        if (btn) {
-          const rect = btn.getBoundingClientRect();
-          if (
-            cursor.x >= rect.left &&
-            cursor.x <= rect.right &&
-            cursor.y >= rect.top &&
-            cursor.y <= rect.bottom
-          ) {
-            btn.click();
-          }
-        }
-      });
+      // Find the element at the SNAP position (which is now button-centered)
+      const element = document.elementFromPoint(cursor.x, cursor.y);
+      if (element instanceof HTMLButtonElement && element.closest(`.${styles.grid}`)) {
+        element.click();
+      }
     }
-  }, [cursor.isPinching, cursor.x, cursor.y]);
+  }, [cursor.isPinching]);
 
   // Handle clear gesture
   useEffect(() => {
